@@ -8,6 +8,8 @@ import json
 import requests
 from bs4 import BeautifulSoup, NavigableString
 from tqdm import tqdm, tqdm_notebook
+from bs4 import BeautifulSoup
+
 
 
 GROBID_URL = 'http://localhost:8070'
@@ -217,7 +219,8 @@ def parse_figure_caption(article):
     figures = article.find_all('figure')
     for figure in figures:
         figure_type = figure.attrs.get('type') or ''
-        figure_id = figure.attrs['xml:id'] or ''
+        figure_id = ''
+        # figure_id = figure.attrs['xml:id'] or ''
         label = figure.find('label').text
         if figure_type == 'table':
             caption = figure.find('figdesc').text
@@ -298,6 +301,9 @@ def parse_pdf_to_dict(pdf_path, fulltext=True, soup=True, as_list=False):
     article_dict: dict, dictionary of an article
     """
     parsed_article = parse_pdf(pdf_path, fulltext=fulltext, soup=soup)
+    with open("/home/guoht/scipdf_parser/results/test1" + ".json",'w') as f:
+        json.dump(parsed_article.prettify(),f)
+
     article_dict = convert_article_soup_to_dict(parsed_article, as_list=as_list)
     return article_dict
 

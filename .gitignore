@@ -6,6 +6,7 @@
 grobid-*/
 *.ipynb
 results/
+testpdf-50/
 *.gz
 
 ### JupyterNotebooks ###
